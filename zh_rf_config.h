@@ -68,6 +68,22 @@ extern "C"
     } zh_rf_sensor_transmitted_data_t;
 
     /**
+     * @brief States of the RF sensor pairing state machine.
+     *
+     * Describes the current step of the pairing exchange between a sensor and
+     * the hub. The machine cycles through sending a pairing request, waiting
+     * for the transmission to complete, listening for the acknowledge, and
+     * backing off before retrying when no answer arrived.
+     */
+    typedef enum
+    {
+        ZH_RF_PAIR_SEND,    /*!< Build and submit a pairing request packet for transmission */
+        ZH_RF_PAIR_TX_WAIT, /*!< Wait until the radio has finished sending the request */
+        ZH_RF_PAIR_RX_WAIT, /*!< Listen for the acknowledge packet from the hub */
+        ZH_RF_PAIR_BACKOFF  /*!< Idle for a random delay before restarting the pairing attempt */
+    } zh_rf_sensor_pairing_state_t;
+
+    /**
      * @brief Pairing packet exchanged between a sensor and the hub.
      *
      * A pairing request carries ZH_RF_PAIRING_REQ_MAGIC as its magic byte;
