@@ -1,0 +1,1 @@
+idf_component_register(HEADER_ONLY INCLUDE_DIRS ".")
